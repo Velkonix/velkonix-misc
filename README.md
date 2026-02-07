@@ -2,6 +2,10 @@
 
 misc repo for protocol-adjacent contracts (token/rewards/staking/etc) and deployment artifacts.
 
+## docs
+
+start here: `docs/README.md`
+
 ## structure
 
 - `src/token/VELK.sol` — main token (mint/burn by minter role).
