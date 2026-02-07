@@ -1,28 +1,28 @@
 # token: velk
 
-**contract:** `src/token/velk.sol`
+**contract:** `src/token/VELK.sol`
 
 ## purpose
 
-main protocol token. minting/burning is controlled by `minter_role`.
+main protocol token. minting/burning is controlled by `MINTER_ROLE`.
 
 ## roles
 
-- `default_admin_role` — role admin, can change minter
-- `minter_role` — can mint / burnfrom
-- `pauser_role` — can pause/unpause transfers
+- `DEFAULT_ADMIN_ROLE` — role admin, can change minter
+- `MINTER_ROLE` — can mint / burnFrom
+- `PAUSER_ROLE` — can pause/unpause transfers
 
 ## key behaviors
 
-- `mint(to, amount)` requires `minter_role`
-- `burnfrom(from, amount)` requires `minter_role`
+- `mint(to, amount)` requires `MINTER_ROLE`
+- `burnFrom(from, amount)` requires `MINTER_ROLE`
 - `pause/unpause` gates transfers via `_update`
-- `setminter(newminter)` changes minter and role assignment
+- `setMinter(newMinter)` changes minter and role assignment
 
 ## parameters
 
-- name/symbol: **velk / velk**
-- decimals: default erc20 (18)
+- name/symbol: **VELK / VELK**
+- decimals: default ERC20 (18)
 
 ## security notes
 

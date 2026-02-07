@@ -1,6 +1,6 @@
 # staking
 
-**contract:** `src/staking/staking.sol`
+**contract:** `src/staking/Staking.sol`
 
 ## purpose
 
@@ -8,15 +8,15 @@ locks **velk** to mint **xvelk** 1:1. supports normal exit after lock, or instan
 
 ## parameters (constructor)
 
-- `velktoken` — velk erc20
-- `xvelktoken` — xvelk erc20
-- `lockduration` — in seconds
-- `instantexitpenaltybps` — penalty in bps (0–10_000)
+- `velkToken` — velk ERC20
+- `xvelkToken` — xvelk ERC20
+- `lockDuration` — in seconds
+- `instantExitPenaltyBps` — penalty in bps (0–10_000)
 
 ## storage
 
-- `deposits[account] = { amount, deposittimestamp }`
-- `rewardsdistributor` — optional, required for instant exit penalty distribution
+- `deposits[account] = { amount, depositTimestamp }`
+- `rewardsDistributor` — optional, required for instant exit penalty distribution
 
 ## functions
 
@@ -30,22 +30,22 @@ locks **velk** to mint **xvelk** 1:1. supports normal exit after lock, or instan
   - burn xvelk
   - transfer velk back
 
-- `instantexit(amount)`:
+- `instantExit(amount)`:
   - requires lock **not** expired
   - burn xvelk
   - user receives `amount - penalty` velk
   - penalty (xvelk) minted to distributor and notified
 
-- `setrewardsdistributor(address)` — admin only
+- `setRewardsDistributor(address)` — admin only
 - `pause/unpause` — pauser role
 
 ## important behaviors
 
-- multiple stakes update `deposittimestamp` to **latest stake** (lock extends)
+- multiple stakes update `depositTimestamp` to **latest stake** (lock extends)
 - instant exit requires distributor set
 - penalty is minted as **xvelk**, not velk
 
 ## recommended params
 
-- `lockduration`: 7d–30d
-- `instantexitpenaltybps`: 500–2000 (5%–20%)
+- `lockDuration`: 7d–30d
+- `instantExitPenaltyBps`: 500–2000 (5%–20%)

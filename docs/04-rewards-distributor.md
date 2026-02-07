@@ -1,6 +1,6 @@
 # rewards distributor
 
-**contract:** `src/staking/rewardsdistributor.sol`
+**contract:** `src/staking/RewardsDistributor.sol`
 
 ## purpose
 
@@ -10,26 +10,26 @@ tracks rewards for xvelk depositors. rewards are distributed in **xvelk**.
 
 - users deposit xvelk
 - rewards are notified in xvelk
-- accounting uses `accrewardpershare`
+- accounting uses `accRewardPerShare`
 
 ## functions
 
-- `setstaking(address)` — admin; only staking can call `notifyreward`
+- `setStaking(address)` — admin; only staking can call `notifyReward`
 - `deposit(amount)` — user deposits xvelk
 - `withdraw(amount)` — user withdraws xvelk
 - `claim()` — transfers pending xvelk
-- `notifyreward(amount)` — only staking, adds to rewards
+- `notifyReward(amount)` — only staking, adds to rewards
 
 ## accounting
 
-- `accrewardpershare` scaled by 1e18
-- `pendingrewards` holds rewards when `totaldeposits == 0`
-- `_distributepending()` moves pending into accrewardpershare once deposits exist
+- `accRewardPerShare` scaled by 1e18
+- `pendingRewards` holds rewards when `totalDeposits == 0`
+- `_distributePending()` moves pending into accRewardPerShare once deposits exist
 
 ## role model
 
-- `default_admin_role` — can set staking and pause
-- `pauser_role` — pause/unpause
+- `DEFAULT_ADMIN_ROLE` — can set staking and pause
+- `PAUSER_ROLE` — pause/unpause
 
 ## notes
 

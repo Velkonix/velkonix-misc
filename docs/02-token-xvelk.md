@@ -1,6 +1,6 @@
 # token: xvelk
 
-**contract:** `src/token/xvelk.sol`
+**contract:** `src/token/xVELK.sol`
 
 ## purpose
 
@@ -8,15 +8,15 @@ staking/escrow token. minted when staking velk. transfers are **restricted** by 
 
 ## roles
 
-- `default_admin_role` — admin, can set minter + whitelist
-- `minter_role` — can mint / burnfrom
-- `pauser_role` — can pause/unpause transfers
+- `DEFAULT_ADMIN_ROLE` — admin, can set minter + whitelist
+- `MINTER_ROLE` — can mint / burnFrom
+- `PAUSER_ROLE` — can pause/unpause transfers
 
 ## key behaviors
 
-- **transfer restriction**: if both `from` and `to` are not whitelisted, transfer reverts (`transfersdisabled`)
-- `settransferwhitelist(account, allowed)` managed by admin
-- `mint/burnfrom` require `minter_role`
+- **transfer restriction**: if both `from` and `to` are not whitelisted, transfer reverts (`TransfersDisabled`)
+- `setTransferWhitelist(account, allowed)` managed by admin
+- `mint/burnFrom` require `MINTER_ROLE`
 
 ## recommended whitelist
 
@@ -26,5 +26,5 @@ staking/escrow token. minted when staking velk. transfers are **restricted** by 
 
 ## parameters
 
-- name/symbol: **xvelk / xvelk**
-- decimals: default erc20 (18)
+- name/symbol: **xVELK / xVELK**
+- decimals: default ERC20 (18)
