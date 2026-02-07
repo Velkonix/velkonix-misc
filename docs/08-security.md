@@ -7,7 +7,7 @@
 
 ## lock behavior
 
-- every new stake updates `depositTimestamp` to **now**
+- every new stake updates `deposittimestamp` to **now**
 - this extends lock for entire position
 
 ## instant exit penalty

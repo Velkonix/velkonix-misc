@@ -2,15 +2,15 @@
 
 ## configurable at deployment
 
-- `lockDuration` (staking)
-- `instantExitPenaltyBps` (staking)
+- `lockduration` (staking)
+- `instantexitpenaltybps` (staking)
 - `minter` for velk / xvelk
 - whitelisted xvelk transfers
 
 ## recommended initial set
 
-- `lockDuration`: 14 days
-- `instantExitPenaltyBps`: 1000 (10%)
+- `lockduration`: 14 days
+- `instantexitpenaltybps`: 1000 (10%)
 - `velk.minter`: staking (after deployment)
 - `xvelk.minter`: staking
 - xvelk whitelist: staking, rewards distributor, treasury

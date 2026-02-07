@@ -4,15 +4,15 @@ misc repo for protocol-adjacent contracts (token/rewards/staking/etc) and deploy
 
 ## docs
 
-start here: `docs/README.md`
+start here: `docs/readme.md`
 
 ## structure
 
-- `src/token/VELK.sol` — main token (mint/burn by minter role).
-- `src/token/xVELK.sol` — escrow/staking token (transfer-restricted, whitelist).
-- `src/staking/Staking.sol` — staking with lock + instant exit penalty.
-- `src/staking/RewardsDistributor.sol` — reward accounting for xVELK deposits.
-- `src/treasury/Treasury.sol` — collects aave rewards and forwards to distributor.
+- `src/token/velk.sol` — main token (mint/burn by minter role).
+- `src/token/xvelk.sol` — escrow/staking token (transfer-restricted, whitelist).
+- `src/staking/staking.sol` — staking with lock + instant exit penalty.
+- `src/staking/rewardsdistributor.sol` — reward accounting for xvelk deposits.
+- `src/treasury/treasury.sol` — collects aave rewards and forwards to distributor.
 
 ## deployments
 
@@ -28,6 +28,6 @@ forge fmt
 
 ## notes
 
-- deployer: 0x1cfbCF19AaD4F9a362749643BA1d52bb9F28d417
+- deployer: 0x1cfbcf19aad4f9a362749643ba1d52bb9f28d417
 - rpc: https://sepolia-rollup.arbitrum.io/rpc
 - report source: velkonix-contracts/reports/1770409750-market-deployment.json

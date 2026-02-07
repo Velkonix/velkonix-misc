@@ -18,11 +18,11 @@ this repo holds protocol‑adjacent contracts for velkonix:
 
 ## repo structure
 
-- `src/token/VELK.sol`
-- `src/token/xVELK.sol`
-- `src/staking/Staking.sol`
-- `src/staking/RewardsDistributor.sol`
-- `src/treasury/Treasury.sol`
+- `src/token/velk.sol`
+- `src/token/xvelk.sol`
+- `src/staking/staking.sol`
+- `src/staking/rewardsdistributor.sol`
+- `src/treasury/treasury.sol`
 - `docs/` — full documentation
 
 ## deployment artifacts
