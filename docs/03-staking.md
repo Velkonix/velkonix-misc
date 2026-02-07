@@ -4,48 +4,48 @@
 
 ## Purpose
 
-Locks **velk** to mint **xvelk** 1:1. Supports normal exit after lock, or instant exit with penalty.
+Locks **VELK** to mint **xVELK** 1:1. Supports normal exit after lock, or instant exit with penalty.
 
 ## Parameters (constructor)
 
-- `VelkToken` — velk ERC20
-- `XvelkToken` — xvelk ERC20
-- `LockDuration` — in seconds
-- `InstantExitPenaltyBps` — penalty in bps (0–10_000)
+- `velkToken` — VELK ERC20
+- `xvelkToken` — xVELK ERC20
+- `lockDuration` — in seconds
+- `instantExitPenaltyBps` — penalty in bps (0–10_000)
 
 ## Storage
 
-- `Deposits[account] = { amount, depositTimestamp }`
-- `RewardsDistributor` — optional, required for instant exit penalty distribution
+- `deposits[account] = { amount, depositTimestamp }`
+- `rewardsDistributor` — optional, required for instant exit penalty distribution
 
 ## Functions
 
-- `Stake(amount)`:
-  - Transfer velk from user
-  - Mint xvelk to user
+- `stake(amount)`:
+  - Transfer VELK from user
+  - Mint xVELK to user
   - Updates deposit timestamp
 
-- `Exit()`:
+- `exit()`:
   - Requires lock expired
-  - Burn xvelk
-  - Transfer velk back
+  - Burn xVELK
+  - Transfer VELK back
 
-- `InstantExit(amount)`:
+- `instantExit(amount)`:
   - Requires lock **not** expired
-  - Burn xvelk
-  - User receives `amount - penalty` velk
-  - Penalty (xvelk) minted to distributor and notified
+  - Burn xVELK
+  - User receives `amount - penalty` VELK
+  - Penalty (xVELK) minted to distributor and notified
 
-- `SetRewardsDistributor(address)` — admin only
-- `Pause/unpause` — pauser role
+- `setRewardsDistributor(address)` — admin only
+- `pause/unpause` — pauser role
 
-## Important behaviors
+## Important Behaviors
 
 - Multiple stakes update `depositTimestamp` to **latest stake** (lock extends)
 - Instant exit requires distributor set
-- Penalty is minted as **xvelk**, not velk
+- Penalty is minted as **xVELK**, not VELK
 
-## Recommended params
+## Recommended Params
 
-- `LockDuration`: 7d–30d
-- `InstantExitPenaltyBps`: 500–2000 (5%–20%)
+- `lockDuration`: 7d–30d
+- `instantExitPenaltyBps`: 500–2000 (5%–20%)

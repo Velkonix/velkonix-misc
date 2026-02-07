@@ -1,10 +1,10 @@
-# Token: xvelk
+# Token: xVELK
 
 **Contract:** `src/token/xVELK.sol`
 
 ## Purpose
 
-Staking/escrow token. Minted when staking velk. Transfers are **restricted** by default; only whitelisted addresses can transfer.
+Staking/escrow token. Minted when staking VELK. Transfers are **restricted** by default; only whitelisted addresses can transfer.
 
 ## Roles
 
@@ -12,17 +12,17 @@ Staking/escrow token. Minted when staking velk. Transfers are **restricted** by 
 - `MINTER_ROLE` — can mint / burnFrom
 - `PAUSER_ROLE` — can pause/unpause transfers
 
-## Key behaviors
+## Key Behaviors
 
 - **Transfer restriction**: if both `from` and `to` are not whitelisted, transfer reverts (`TransfersDisabled`)
-- `SetTransferWhitelist(account, allowed)` managed by admin
-- `Mint/burnFrom` require `MINTER_ROLE`
+- `setTransferWhitelist(account, allowed)` managed by admin
+- `mint/burnFrom` require `MINTER_ROLE`
 
-## Recommended whitelist
+## Recommended Whitelist
 
 - Staking contract
 - Rewards distributor
-- Treasury (if it needs to move xvelk)
+- Treasury (if it needs to move xVELK)
 
 ## Parameters
 

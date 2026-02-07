@@ -1,22 +1,22 @@
-# Parameters & defaults
+# Parameters & Defaults
 
-## Configurable at deployment
+## Configurable At Deployment
 
-- `LockDuration` (staking)
-- `InstantExitPenaltyBps` (staking)
-- `Minter` for velk / xvelk
-- Whitelisted xvelk transfers
+- `lockDuration` (staking)
+- `instantExitPenaltyBps` (staking)
+- `minter` for VELK / xVELK
+- Whitelisted xVELK transfers
 
-## Recommended initial set
+## Recommended Initial Set
 
-- `LockDuration`: 14 days
-- `InstantExitPenaltyBps`: 1000 (10%)
-- `Velk.minter`: staking (after deployment)
-- `Xvelk.minter`: staking
-- Xvelk whitelist: staking, rewards distributor, treasury
+- `lockDuration`: 14 days
+- `instantExitPenaltyBps`: 1000 (10%)
+- `VELK.minter`: staking (after deployment)
+- `xVELK.minter`: staking
+- xVELK whitelist: staking, rewards distributor, treasury
 
-## Governance to decide
+## Governance To Decide
 
 - Penalty size and lock duration
-- Whether xvelk should be transferable or not
+- Whether xVELK should be transferable or not
 - Whether to add redemption or vesting

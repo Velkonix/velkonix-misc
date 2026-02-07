@@ -1,22 +1,22 @@
 # Overview
 
-This repo holds protocol‑adjacent contracts for velkonix:
+This repo holds protocol‑adjacent contracts for Velkonix:
 
-- **Velk**: main protocol token
-- **Xvelk**: escrow / staking token
-- **Staking**: lock + instant exit penalty, mints/burns xvelk
-- **Rewards distributor**: accounting for xvelk rewards
-- **Treasury**: collects aave rewards and forwards to distributor
+- **VELK**: main protocol token
+- **xVELK**: escrow / staking token
+- **Staking**: lock + instant exit penalty, mints/burns xVELK
+- **Rewards distributor**: accounting for xVELK rewards
+- **Treasury**: collects Aave rewards and forwards to distributor
 
-## High‑level flow
+## High‑level Flow
 
-1) User stakes **velk** → staking mints **xvelk** 1:1
-2) User can **exit** after lock → burn xvelk, receive velk
-3) **Instant exit** before lock → burn xvelk, user receives velk minus penalty
-4) Penalty is minted as xvelk to rewards distributor and shared to xvelk stakers
-5) Treasury can **deposit rewards** (velk) → mints xvelk to distributor and notifies
+1) User stakes **VELK** → staking mints **xVELK** 1:1
+2) User can **exit** after lock → burn xVELK, receive VELK
+3) **Instant exit** before lock → burn xVELK, user receives VELK minus penalty
+4) Penalty is minted as xVELK to rewards distributor and shared to xVELK stakers
+5) Treasury can **deposit rewards** (VELK) → mints xVELK to distributor and notifies
 
-## Repo structure
+## Repo Structure
 
 - `Src/token/VELK.sol`
 - `Src/token/xVELK.sol`
@@ -25,6 +25,6 @@ This repo holds protocol‑adjacent contracts for velkonix:
 - `Src/treasury/Treasury.sol`
 - `Docs/` — full documentation
 
-## Deployment artifacts
+## Deployment Artifacts
 
-- `Deployments/arbitrum-sepolia/market-deployment.json` — aave v3 batch deploy report
+- `Deployments/arbitrum-sepolia/market-deployment.json` — Aave V3 batch deploy report

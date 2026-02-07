@@ -1,16 +1,16 @@
-# Architecture diagram (text)
+# Architecture Diagram (text)
 
 ```
 User
-  | stake velk
+  | stake VELK
   v
 Staking ---------------------> xVELK (mint/burn)
   | instant exit penalty
   v
 RewardsDistributor <--------- xVELK (penalty + rewards)
-  ^ deposit/withdraw xvelk
+  ^ deposit/withdraw xVELK
   |
 Treasury (optional)
-  | claim aave rewards
-  | deposit velk -> mint xvelk -> notify
+  | claim Aave rewards
+  | deposit VELK -> mint xVELK -> notify
 ```

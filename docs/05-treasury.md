@@ -6,22 +6,22 @@
 
 Central contract to:
 
-- Claim aave rewards via `IRewardsController`
-- Deposit velk rewards into distributor (mints xvelk and notifies)
+- Claim Aave rewards via `IRewardsController`
+- Deposit VELK rewards into distributor (mints xVELK and notifies)
 
 ## Functions
 
-- `SetRewardsController(address)` — admin only
-- `SetRewardAssets(address[])` — admin only
-- `ClaimAaveRewards()` — admin only; claims all rewards to treasury
-- `DepositRewards(amount)` — admin only; velk → xvelk → distributor
+- `setRewardsController(address)` — admin only
+- `setRewardAssets(address[])` — admin only
+- `claimAaveRewards()` — admin only; claims all rewards to treasury
+- `depositRewards(amount)` — admin only; VELK → xVELK → distributor
 
-## Role model
+## Role Model
 
 - `DEFAULT_ADMIN_ROLE` — governance/admin
 - `PAUSER_ROLE` — pause/unpause
 
 ## Notes
 
-- `DepositRewards` expects velk approved to treasury
-- Rewards from aave are not automatically swapped into velk (manual step)
+- `depositRewards` expects VELK approved to treasury
+- Rewards from Aave are not automatically swapped into VELK (manual step)

@@ -1,4 +1,4 @@
-# Token: velk
+# Token: VELK
 
 **Contract:** `src/token/VELK.sol`
 
@@ -12,19 +12,19 @@ Main protocol token. Minting/burning is controlled by `MINTER_ROLE`.
 - `MINTER_ROLE` — can mint / burnFrom
 - `PAUSER_ROLE` — can pause/unpause transfers
 
-## Key behaviors
+## Key Behaviors
 
-- `Mint(to, amount)` requires `MINTER_ROLE`
-- `BurnFrom(from, amount)` requires `MINTER_ROLE`
-- `Pause/unpause` gates transfers via `_update`
-- `SetMinter(newMinter)` changes minter and role assignment
+- `mint(to, amount)` requires `MINTER_ROLE`
+- `burnFrom(from, amount)` requires `MINTER_ROLE`
+- `pause/unpause` gates transfers via `_update`
+- `setMinter(newMinter)` changes minter and role assignment
 
 ## Parameters
 
 - Name/symbol: **VELK / VELK**
 - Decimals: default ERC20 (18)
 
-## Security notes
+## Security Notes
 
 - Only minter can change supply
 - Pause is global for transfers

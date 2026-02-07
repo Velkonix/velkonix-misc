@@ -1,8 +1,8 @@
-# Docs index
+# Docs Index
 
 - [Overview](./00-overview.md)
-- [Velk token](./01-token-velk.md)
-- [Xvelk token](./02-token-xvelk.md)
+- [VELK token](./01-token-VELK.md)
+- [xVELK token](./02-token-xVELK.md)
 - [Staking](./03-staking.md)
 - [Rewards distributor](./04-rewards-distributor.md)
 - [Treasury](./05-treasury.md)
