@@ -17,6 +17,8 @@ contract xVELK is ERC20, AccessControl, Pausable {
     mapping(address => bool) public transferWhitelist;
 
     event MinterUpdated(address indexed previousMinter, address indexed newMinter);
+    event MinterAdded(address indexed account);
+    event MinterRemoved(address indexed account);
     event TransferWhitelistUpdated(address indexed account, bool allowed);
 
     constructor(address initialMinter) ERC20("xVELK", "xVELK") {
@@ -38,6 +40,22 @@ contract xVELK is ERC20, AccessControl, Pausable {
         emit MinterUpdated(minter, newMinter);
         minter = newMinter;
         _grantRole(MINTER_ROLE, newMinter);
+    }
+
+    function addMinter(address account) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        if (account == address(0)) {
+            revert ZeroAddress();
+        }
+        _grantRole(MINTER_ROLE, account);
+        emit MinterAdded(account);
+    }
+
+    function removeMinter(address account) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        if (account == address(0)) {
+            revert ZeroAddress();
+        }
+        _revokeRole(MINTER_ROLE, account);
+        emit MinterRemoved(account);
     }
 
     function setTransferWhitelist(address account, bool allowed) external onlyRole(DEFAULT_ADMIN_ROLE) {

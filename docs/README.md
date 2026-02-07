@@ -12,3 +12,4 @@
 - [security notes](./08-security.md)
 - [architecture diagram](./09-architecture-diagram.md)
 - [deploy all](../script/DeployAll.md)
+- [e2e test plan](./10-e2e-test.md)

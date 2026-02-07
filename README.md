@@ -29,8 +29,16 @@ forge fmt
 
 ## deploy
 
-- script: `script/DeployAll.s.sol`
-- instructions: `script/DeployAll.md`
+- foundry: `script/DeployAll.s.sol` + `script/DeployAll.md`
+- hardhat: `scripts/deploy-all.js`
+
+## scripts
+
+- `scripts/fee-claim.js`
+- `scripts/deposit-rewards.js`
+- `scripts/mock-fee-to-xvelk.js`
+- `scripts/mock-fee-claim-and-convert.js`
+- `scripts/staking-reward-notify.js`
 
 ## notes
 
