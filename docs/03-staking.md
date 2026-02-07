@@ -45,9 +45,3 @@ Locks **VELK** to mint **xVELK** 1:1. Supports normal exit after lock, or instan
 - xVELK balance always mirrors staked VELK 1:1 (mint on stake, burn on exit/instant exit).
 - Instant exit requires distributor set.
 - Penalty is minted as **xVELK**, not VELK.
-
-## Balance Effects
-
-- **Stake:** VELK decreases by `amount`, xVELK increases by `amount`.
-- **Exit (after lock):** xVELK decreases by `amount`, VELK increases by `amount`.
-- **Instant Exit (before lock):** xVELK decreases by `amount`, VELK increases by `amount - penalty`, and `penalty` xVELK is minted to the rewards distributor.
