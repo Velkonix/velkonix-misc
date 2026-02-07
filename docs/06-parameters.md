@@ -9,8 +9,8 @@
 
 ## Recommended Initial Set
 
-- `lockDuration`: 14 days
-- `instantExitPenaltyBps`: 1000 (10%)
+- `lockDuration`: 3 months
+- `instantExitPenaltyBps`: 3000 (30%)
 - `VELK.minter`: staking (after deployment)
 - `xVELK.minter`: staking
 - xVELK whitelist: staking, rewards distributor, treasury
