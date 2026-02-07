@@ -1,24 +1,24 @@
-# velkonix-misc
+# Velkonix-misc
 
-misc repo for protocol-adjacent contracts (token/rewards/staking/etc) and deployment artifacts.
+Misc repo for protocol-adjacent contracts (token/rewards/staking/etc) and deployment artifacts.
 
-## docs
+## Docs
 
-start here: `docs/README.md`
+Start here: `docs/README.md`
 
-## structure
+## Structure
 
-- `src/token/VELK.sol` — main token (mint/burn by minter role).
-- `src/token/xVELK.sol` — escrow/staking token (transfer-restricted, whitelist).
-- `src/staking/Staking.sol` — staking with lock + instant exit penalty.
-- `src/staking/RewardsDistributor.sol` — reward accounting for xVELK deposits.
-- `src/treasury/Treasury.sol` — collects aave rewards and forwards to distributor.
+- `Src/token/VELK.sol` — main token (mint/burn by minter role).
+- `Src/token/xVELK.sol` — escrow/staking token (transfer-restricted, whitelist).
+- `Src/staking/Staking.sol` — staking with lock + instant exit penalty.
+- `Src/staking/RewardsDistributor.sol` — reward accounting for xVELK deposits.
+- `Src/treasury/Treasury.sol` — collects aave rewards and forwards to distributor.
 
-## deployments
+## Deployments
 
-- `deployments/arbitrum-sepolia/market-deployment.json` — aave v3 batch deploy (base config, no paraswap/ui/wrapped gateway).
+- `Deployments/arbitrum-sepolia/market-deployment.json` — aave v3 batch deploy (base config, no paraswap/ui/wrapped gateway).
 
-## usage
+## Usage
 
 ```bash
 forge build
@@ -26,8 +26,8 @@ forge test
 forge fmt
 ```
 
-## notes
+## Notes
 
-- deployer: 0x1cfbCF19AaD4F9a362749643BA1d52bb9F28d417
-- rpc: https://sepolia-rollup.arbitrum.io/rpc
-- report source: velkonix-contracts/reports/1770409750-market-deployment.json
+- Deployer: 0x1cfbCF19AaD4F9a362749643BA1d52bb9F28d417
+- Rpc: https://sepolia-rollup.arbitrum.io/rpc
+- Report source: velkonix-contracts/reports/1770409750-market-deployment.json

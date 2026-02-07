@@ -1,31 +1,31 @@
-# security notes
+# Security notes
 
-## transfer restrictions
+## Transfer restrictions
 
-- xvelk transfers are blocked unless sender or receiver is whitelisted
-- this prevents secondary market trading unless explicitly enabled
+- Xvelk transfers are blocked unless sender or receiver is whitelisted
+- This prevents secondary market trading unless explicitly enabled
 
-## lock behavior
+## Lock behavior
 
-- every new stake updates `depositTimestamp` to **now**
-- this extends lock for entire position
+- Every new stake updates `depositTimestamp` to **now**
+- This extends lock for entire position
 
-## instant exit penalty
+## Instant exit penalty
 
-- penalty minted as **xvelk** to rewards distributor
-- user receives reduced **velk** amount
+- Penalty minted as **xvelk** to rewards distributor
+- User receives reduced **velk** amount
 
-## pausable
+## Pausable
 
-- velk, xvelk, staking, distributor, treasury are pausable
+- Velk, xvelk, staking, distributor, treasury are pausable
 
-## trust assumptions
+## Trust assumptions
 
-- admin can change minters and whitelists
-- admin can pause/unpause
+- Admin can change minters and whitelists
+- Admin can pause/unpause
 
-## audit checklist
+## Audit checklist
 
-- check role assignments after deployment
-- verify whitelist is set before enabling transfers
-- verify rewards distributor set before instant exits
+- Check role assignments after deployment
+- Verify whitelist is set before enabling transfers
+- Verify rewards distributor set before instant exits

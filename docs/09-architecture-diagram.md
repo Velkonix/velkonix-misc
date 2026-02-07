@@ -1,4 +1,4 @@
-# architecture diagram (text)
+# Architecture diagram (text)
 
 ```
 User

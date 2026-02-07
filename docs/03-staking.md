@@ -1,51 +1,51 @@
-# staking
+# Staking
 
-**contract:** `src/staking/Staking.sol`
+**Contract:** `src/staking/Staking.sol`
 
-## purpose
+## Purpose
 
-locks **velk** to mint **xvelk** 1:1. supports normal exit after lock, or instant exit with penalty.
+Locks **velk** to mint **xvelk** 1:1. Supports normal exit after lock, or instant exit with penalty.
 
-## parameters (constructor)
+## Parameters (constructor)
 
-- `velkToken` — velk ERC20
-- `xvelkToken` — xvelk ERC20
-- `lockDuration` — in seconds
-- `instantExitPenaltyBps` — penalty in bps (0–10_000)
+- `VelkToken` — velk ERC20
+- `XvelkToken` — xvelk ERC20
+- `LockDuration` — in seconds
+- `InstantExitPenaltyBps` — penalty in bps (0–10_000)
 
-## storage
+## Storage
 
-- `deposits[account] = { amount, depositTimestamp }`
-- `rewardsDistributor` — optional, required for instant exit penalty distribution
+- `Deposits[account] = { amount, depositTimestamp }`
+- `RewardsDistributor` — optional, required for instant exit penalty distribution
 
-## functions
+## Functions
 
-- `stake(amount)`:
-  - transfer velk from user
-  - mint xvelk to user
-  - updates deposit timestamp
+- `Stake(amount)`:
+  - Transfer velk from user
+  - Mint xvelk to user
+  - Updates deposit timestamp
 
-- `exit()`:
-  - requires lock expired
-  - burn xvelk
-  - transfer velk back
+- `Exit()`:
+  - Requires lock expired
+  - Burn xvelk
+  - Transfer velk back
 
-- `instantExit(amount)`:
-  - requires lock **not** expired
-  - burn xvelk
-  - user receives `amount - penalty` velk
-  - penalty (xvelk) minted to distributor and notified
+- `InstantExit(amount)`:
+  - Requires lock **not** expired
+  - Burn xvelk
+  - User receives `amount - penalty` velk
+  - Penalty (xvelk) minted to distributor and notified
 
-- `setRewardsDistributor(address)` — admin only
-- `pause/unpause` — pauser role
+- `SetRewardsDistributor(address)` — admin only
+- `Pause/unpause` — pauser role
 
-## important behaviors
+## Important behaviors
 
-- multiple stakes update `depositTimestamp` to **latest stake** (lock extends)
-- instant exit requires distributor set
-- penalty is minted as **xvelk**, not velk
+- Multiple stakes update `depositTimestamp` to **latest stake** (lock extends)
+- Instant exit requires distributor set
+- Penalty is minted as **xvelk**, not velk
 
-## recommended params
+## Recommended params
 
-- `lockDuration`: 7d–30d
-- `instantExitPenaltyBps`: 500–2000 (5%–20%)
+- `LockDuration`: 7d–30d
+- `InstantExitPenaltyBps`: 500–2000 (5%–20%)

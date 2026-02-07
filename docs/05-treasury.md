@@ -1,27 +1,27 @@
-# treasury
+# Treasury
 
-**contract:** `src/treasury/Treasury.sol`
+**Contract:** `src/treasury/Treasury.sol`
 
-## purpose
+## Purpose
 
-central contract to:
+Central contract to:
 
-- claim aave rewards via `IRewardsController`
-- deposit velk rewards into distributor (mints xvelk and notifies)
+- Claim aave rewards via `IRewardsController`
+- Deposit velk rewards into distributor (mints xvelk and notifies)
 
-## functions
+## Functions
 
-- `setRewardsController(address)` — admin only
-- `setRewardAssets(address[])` — admin only
-- `claimAaveRewards()` — admin only; claims all rewards to treasury
-- `depositRewards(amount)` — admin only; velk → xvelk → distributor
+- `SetRewardsController(address)` — admin only
+- `SetRewardAssets(address[])` — admin only
+- `ClaimAaveRewards()` — admin only; claims all rewards to treasury
+- `DepositRewards(amount)` — admin only; velk → xvelk → distributor
 
-## role model
+## Role model
 
 - `DEFAULT_ADMIN_ROLE` — governance/admin
 - `PAUSER_ROLE` — pause/unpause
 
-## notes
+## Notes
 
-- `depositRewards` expects velk approved to treasury
-- rewards from aave are not automatically swapped into velk (manual step)
+- `DepositRewards` expects velk approved to treasury
+- Rewards from aave are not automatically swapped into velk (manual step)

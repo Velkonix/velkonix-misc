@@ -1,36 +1,36 @@
-# rewards distributor
+# Rewards distributor
 
-**contract:** `src/staking/RewardsDistributor.sol`
+**Contract:** `src/staking/RewardsDistributor.sol`
 
-## purpose
+## Purpose
 
-tracks rewards for xvelk depositors. rewards are distributed in **xvelk**.
+Tracks rewards for xvelk depositors. Rewards are distributed in **xvelk**.
 
-## model
+## Model
 
-- users deposit xvelk
-- rewards are notified in xvelk
-- accounting uses `accRewardPerShare`
+- Users deposit xvelk
+- Rewards are notified in xvelk
+- Accounting uses `accRewardPerShare`
 
-## functions
+## Functions
 
-- `setStaking(address)` — admin; only staking can call `notifyReward`
-- `deposit(amount)` — user deposits xvelk
-- `withdraw(amount)` — user withdraws xvelk
-- `claim()` — transfers pending xvelk
-- `notifyReward(amount)` — only staking, adds to rewards
+- `SetStaking(address)` — admin; only staking can call `notifyReward`
+- `Deposit(amount)` — user deposits xvelk
+- `Withdraw(amount)` — user withdraws xvelk
+- `Claim()` — transfers pending xvelk
+- `NotifyReward(amount)` — only staking, adds to rewards
 
-## accounting
+## Accounting
 
-- `accRewardPerShare` scaled by 1e18
-- `pendingRewards` holds rewards when `totalDeposits == 0`
-- `_distributePending()` moves pending into accRewardPerShare once deposits exist
+- `AccRewardPerShare` scaled by 1e18
+- `PendingRewards` holds rewards when `totalDeposits == 0`
+- `_DistributePending()` moves pending into accRewardPerShare once deposits exist
 
-## role model
+## Role model
 
 - `DEFAULT_ADMIN_ROLE` — can set staking and pause
 - `PAUSER_ROLE` — pause/unpause
 
-## notes
+## Notes
 
-- rewards are **xvelk**: users stay in escrow token unless you add a swap/redemption layer
+- Rewards are **xvelk**: users stay in escrow token unless you add a swap/redemption layer
