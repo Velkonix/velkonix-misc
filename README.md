@@ -39,6 +39,7 @@ forge fmt
 - `scripts/mock-fee-to-xvelk.js`
 - `scripts/mock-fee-claim-and-convert.js`
 - `scripts/staking-reward-notify.js`
+- `scripts/e2e-onchain.js`
 
 ## notes
 
