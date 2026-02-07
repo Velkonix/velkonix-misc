@@ -27,6 +27,11 @@ forge test
 forge fmt
 ```
 
+## deploy
+
+- script: `script/DeployAll.s.sol`
+- instructions: `script/DeployAll.md`
+
 ## notes
 
 - deployer: 0x1cfbCF19AaD4F9a362749643BA1d52bb9F28d417

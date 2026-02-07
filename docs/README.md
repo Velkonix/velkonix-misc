@@ -11,3 +11,4 @@
 - [ops runbook](./07-ops-runbook.md)
 - [security notes](./08-security.md)
 - [architecture diagram](./09-architecture-diagram.md)
+- [deploy all](../script/DeployAll.md)
