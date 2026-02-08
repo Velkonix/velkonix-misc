@@ -6,7 +6,8 @@
   "scripts": {
     "hh:test": "hardhat test",
     "hh:compile": "hardhat compile",
-    "hh:e2e": "hardhat run scripts/e2e-onchain.js"
+    "hh:e2e": "hardhat run scripts/e2e-onchain.js",
+    "forge:test": "forge test"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-foundry": "^1.2.0",
