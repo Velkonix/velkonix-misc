@@ -47,6 +47,8 @@ contract E2ETest is Test {
         xvelk.setTransferWhitelist(address(staking), true);
         distributor.setStaking(address(staking));
         staking.setRewardsDistributor(address(distributor));
+        xvelk.addMinter(address(treasury));
+        distributor.setStaking(address(treasury));
 
         feeToken = new MockERC20("FeeToken", "FEE");
         collector = new MockCollector();
@@ -101,6 +103,11 @@ contract E2ETest is Test {
         vm.stopPrank();
 
         // claim staking rewards
+        xvelk.addMinter(address(this));
+        distributor.setStaking(address(this));
+        xvelk.mint(address(distributor), 200e18);
+        distributor.notifyReward(200e18);
+
         vm.prank(user1);
         distributor.claim();
         vm.prank(user2);

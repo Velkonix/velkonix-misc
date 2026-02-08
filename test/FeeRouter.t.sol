@@ -93,6 +93,7 @@ contract FeeRouterTest is Test {
         list[0] = address(tokenA);
         router.setTokens(list);
 
+        vm.prank(address(0xDEAD));
         vm.expectRevert();
         router.claimAll();
     }
