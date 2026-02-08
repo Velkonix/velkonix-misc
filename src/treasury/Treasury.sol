@@ -7,7 +7,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import {IRewardsController} from "../interfaces/IRewardsController.sol";
+import {IRewardsController} from "velkonix-contracts/src/contracts/rewards/interfaces/IRewardsController.sol";
 import {xVELK} from "../token/xVELK.sol";
 import {RewardsDistributor} from "../staking/RewardsDistributor.sol";
 
