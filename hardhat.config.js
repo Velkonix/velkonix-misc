@@ -1,4 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("@nomicfoundation/hardhat-foundry");
 require("dotenv").config();
 
 const { ARBITRUM_SEPOLIA_RPC_URL, DEPLOYER_PRIVATE_KEY } = process.env;
