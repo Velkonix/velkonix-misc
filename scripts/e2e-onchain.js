@@ -1,42 +1,36 @@
 require("dotenv").config();
-const { ethers } = require("hardhat");
+const fs = require("fs");
+const path = require("path");
+const hre = require("hardhat");
+const { ethers } = hre;
 
 async function main() {
+  const deploymentPath = process.env.DEPLOYMENT_PATH || "deployments/arbitrum-sepolia/velkonix-misc-deployment.json";
+  const deployment = fs.existsSync(deploymentPath)
+    ? JSON.parse(fs.readFileSync(deploymentPath, "utf8"))
+    : {};
+
   const cfg = {
-    pool: process.env.POOL,
-    collector: process.env.COLLECTOR,
-    feeRouter: process.env.FEE_ROUTER,
+    pool: process.env.POOL || "0x2102E2F0eCa7E293a0BacD343bd001a91e8fa177",
+    collector: process.env.COLLECTOR || deployment.collector || "0xD4aB0313C451961dfE2a77337367DA44b2629993",
+    feeRouter: process.env.FEE_ROUTER || deployment.feeRouter,
     feeTokens: (process.env.FEE_TOKENS || "").split(",").filter(Boolean),
-    velk: process.env.VELK,
-    xvelk: process.env.XVELK,
-    treasury: process.env.TREASURY,
-    staking: process.env.STAKING,
-    rewardsDistributor: process.env.REWARDS_DISTRIBUTOR,
+    velk: process.env.VELK || deployment.velk,
+    xvelk: process.env.XVELK || deployment.xvelk,
+    treasury: process.env.TREASURY || deployment.treasury,
+    staking: process.env.STAKING || deployment.staking,
+    rewardsDistributor: process.env.REWARDS_DISTRIBUTOR || deployment.rewardsDistributor,
+    rewardsController: process.env.REWARDS_CONTROLLER || "0x7D178C702DF8f1A8493d9FF959D570D3f8142D52",
     aToken: process.env.ATOKEN,
     debtToken: process.env.DEBT_TOKEN,
-    rewardsController: process.env.REWARDS_CONTROLLER,
-    user1: process.env.USER1,
-    user2: process.env.USER2,
     amount: process.env.AMOUNT || "1000000000000000000",
     rewardAmount: process.env.REWARD_AMOUNT || "1000000000000000000",
   };
 
-  const required = [
-    "pool",
-    "collector",
-    "feeRouter",
-    "velk",
-    "xvelk",
-    "treasury",
-    "staking",
-    "rewardsDistributor",
-    "rewardsController",
-    "user1",
-    "user2",
-  ];
+  const required = ["feeRouter", "velk", "xvelk", "treasury", "staking", "rewardsDistributor"];
   for (const key of required) {
     if (!cfg[key]) {
-      throw new Error(`missing env ${key.toUpperCase()}`);
+      throw new Error(`missing ${key}`);
     }
   }
 
@@ -46,6 +40,7 @@ async function main() {
   );
   const feeRouter = await ethers.getContractAt("FeeRouter", cfg.feeRouter);
   const velk = await ethers.getContractAt("VELK", cfg.velk);
+  const xvelk = await ethers.getContractAt("xVELK", cfg.xvelk);
   const treasury = await ethers.getContractAt("Treasury", cfg.treasury);
   const staking = await ethers.getContractAt("Staking", cfg.staking);
   const rewards = await ethers.getContractAt("RewardsDistributor", cfg.rewardsDistributor);
@@ -55,61 +50,88 @@ async function main() {
   );
 
   const [signer] = await ethers.getSigners();
-  const user1 = await ethers.getSigner(cfg.user1);
-  const user2 = await ethers.getSigner(cfg.user2);
+  const user1 = ethers.Wallet.createRandom().connect(ethers.provider);
+  const user2 = ethers.Wallet.createRandom().connect(ethers.provider);
 
-  // 1) mint to treasury (protocol fees)
-  if (cfg.feeTokens.length > 0) {
-    const tx1 = await pool.mintToTreasury(cfg.feeTokens);
-    await tx1.wait();
+  // fork-only: impersonate velk minter (deployer) to mint
+  if (hre.network.name === "hardhat") {
+    const minter = deployment.deployer;
+    if (!minter) {
+      throw new Error("missing deployer in deployment file for fork minter impersonation");
+    }
+    await hre.network.provider.request({
+      method: "hardhat_impersonateAccount",
+      params: [minter],
+    });
+    await hre.network.provider.send("hardhat_setBalance", [minter, "0x3635C9ADC5DEA00000"]); // 1000 ETH
+    const minterSigner = await ethers.getSigner(minter);
+
+    cfg._velkMinterSigner = minterSigner;
+    cfg._adminSigner = minterSigner;
   }
 
-  // 2) claim fees from collector to treasury
+  // fund users with eth for gas
+  await (await signer.sendTransaction({ to: user1.address, value: ethers.parseEther("0.01") })).wait();
+  await (await signer.sendTransaction({ to: user2.address, value: ethers.parseEther("0.01") })).wait();
+
+  // optional: mint to treasury (protocol fees)
   if (cfg.feeTokens.length > 0) {
-    const tx2 = await feeRouter.claim(cfg.feeTokens);
-    await tx2.wait();
+    await (await pool.mintToTreasury(cfg.feeTokens)).wait();
+    await (await feeRouter.claim(cfg.feeTokens)).wait();
   }
 
-  // 3) mock convert fees -> velk -> xvelk rewards
-  const mintTx = await velk.mint(await signer.getAddress(), cfg.rewardAmount);
-  await mintTx.wait();
-  const approveTx = await velk.approve(cfg.treasury, cfg.rewardAmount);
-  await approveTx.wait();
-  const depTx = await treasury.depositRewards(cfg.rewardAmount);
-  await depTx.wait();
+  // fork-only: allow treasury and admin to mint xvelk and act as staking for rewards
+  if (cfg._adminSigner) {
+    await (await xvelk.connect(cfg._adminSigner).addMinter(cfg.treasury)).wait();
+    await (await rewards.connect(cfg._adminSigner).setStaking(cfg.treasury)).wait();
+  }
 
-  // 4) users stake velk -> xvelk
-  const u1Approve = await velk.connect(user1).approve(cfg.staking, cfg.amount);
-  await u1Approve.wait();
-  const u1Stake = await staking.connect(user1).stake(cfg.amount);
-  await u1Stake.wait();
+  // mock convert fees -> velk -> xvelk rewards
+  const velkMinter = cfg._velkMinterSigner ? velk.connect(cfg._velkMinterSigner) : velk;
+  const adminSigner = cfg._adminSigner || signer;
+  await (await velkMinter.mint(await adminSigner.getAddress(), cfg.rewardAmount)).wait();
+  await (await velk.connect(adminSigner).approve(cfg.treasury, cfg.rewardAmount)).wait();
+  await (await treasury.connect(adminSigner).depositRewards(cfg.rewardAmount)).wait();
 
-  const u2Approve = await velk.connect(user2).approve(cfg.staking, cfg.amount);
-  await u2Approve.wait();
-  const u2Stake = await staking.connect(user2).stake(cfg.amount);
-  await u2Stake.wait();
+  // mint velk for users and stake
+  await (await velkMinter.mint(user1.address, cfg.amount)).wait();
+  await (await velkMinter.mint(user2.address, cfg.amount)).wait();
 
-  const u1XApprove = await ethers.getContractAt("xVELK", cfg.xvelk);
-  await (await u1XApprove.connect(user1).approve(cfg.rewardsDistributor, cfg.amount)).wait();
+  await (await velk.connect(user1).approve(cfg.staking, cfg.amount)).wait();
+  await (await staking.connect(user1).stake(cfg.amount)).wait();
+
+  await (await velk.connect(user2).approve(cfg.staking, cfg.amount)).wait();
+  await (await staking.connect(user2).stake(cfg.amount)).wait();
+
+  await (await xvelk.connect(user1).approve(cfg.rewardsDistributor, cfg.amount)).wait();
   await (await rewards.connect(user1).deposit(cfg.amount)).wait();
 
-  await (await u1XApprove.connect(user2).approve(cfg.rewardsDistributor, cfg.amount)).wait();
+  await (await xvelk.connect(user2).approve(cfg.rewardsDistributor, cfg.amount)).wait();
   await (await rewards.connect(user2).deposit(cfg.amount)).wait();
 
-  // 5) claim staking rewards
+  // notify rewards so claims succeed
+  if (cfg._adminSigner) {
+    const rewardMintAmount = (BigInt(cfg.amount) * 2n).toString();
+    await (await xvelk.connect(cfg._adminSigner).addMinter(await cfg._adminSigner.getAddress())).wait();
+    await (await rewards.connect(cfg._adminSigner).setStaking(await cfg._adminSigner.getAddress())).wait();
+    await (await xvelk.connect(cfg._adminSigner).mint(cfg.rewardsDistributor, rewardMintAmount)).wait();
+    await (await rewards.connect(cfg._adminSigner).notifyReward(rewardMintAmount)).wait();
+  }
+
   await (await rewards.connect(user1).claim()).wait();
   await (await rewards.connect(user2).claim()).wait();
 
-  // 6) claim rewards for deposit/borrow (xvelk reward configured in rewardsController)
   const assets = [];
   if (cfg.aToken) assets.push(cfg.aToken);
   if (cfg.debtToken) assets.push(cfg.debtToken);
   if (assets.length > 0) {
-    await (await rewardsController.connect(user1).claimAllRewards(assets, cfg.user1)).wait();
-    await (await rewardsController.connect(user2).claimAllRewards(assets, cfg.user2)).wait();
+    await (await rewardsController.connect(user1).claimAllRewards(assets, user1.address)).wait();
+    await (await rewardsController.connect(user2).claimAllRewards(assets, user2.address)).wait();
   }
 
   console.log("e2e onchain flow completed");
+  console.log("user1:", user1.address);
+  console.log("user2:", user2.address);
 }
 
 main().catch((err) => {
