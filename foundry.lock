@@ -10,5 +10,8 @@
       "name": "v5.5.0",
       "rev": "fcbae5394ae8ad52d8e580a3477db99814b9d565"
     }
+  },
+  "lib/velkonix-contracts": {
+    "rev": "5c2eb37f39959dd491ba97fdc2af94bb4ee88f41"
   }
 }
