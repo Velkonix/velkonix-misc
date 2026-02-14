@@ -1,5 +1,7 @@
-require("dotenv").config();
-const { ethers } = require("hardhat");
+import "dotenv/config";
+import { network } from "hardhat";
+
+const { ethers } = await network.connect();
 
 async function main() {
   const feeRouterAddress = process.env.FEE_ROUTER;

@@ -1,10 +1,17 @@
-require("@nomicfoundation/hardhat-toolbox");
-require("@nomicfoundation/hardhat-foundry");
-require("dotenv").config();
+import { defineConfig } from "hardhat/config";
+import hardhatEthers from "@nomicfoundation/hardhat-ethers";
+import hardhatMocha from "@nomicfoundation/hardhat-mocha";
+import dotenv from "dotenv";
 
-const { ARBITRUM_SEPOLIA_RPC_URL, DEPLOYER_PRIVATE_KEY } = process.env;
+dotenv.config();
 
-module.exports = {
+const {
+  ARBITRUM_SEPOLIA_RPC_URL = "https://sepolia-rollup.arbitrum.io/rpc",
+  DEPLOYER_PRIVATE_KEY,
+} = process.env;
+
+export default defineConfig({
+  plugins: [hardhatEthers, hardhatMocha],
   solidity: "0.8.33",
   paths: {
     sources: "src",
@@ -14,6 +21,7 @@ module.exports = {
   },
   networks: {
     hardhat: {
+      type: "edr-simulated",
       forking: ARBITRUM_SEPOLIA_RPC_URL
         ? {
             url: ARBITRUM_SEPOLIA_RPC_URL,
@@ -21,8 +29,9 @@ module.exports = {
         : undefined,
     },
     arbitrum_sepolia: {
-      url: ARBITRUM_SEPOLIA_RPC_URL || "",
+      type: "http",
+      url: ARBITRUM_SEPOLIA_RPC_URL,
       accounts: DEPLOYER_PRIVATE_KEY ? [DEPLOYER_PRIVATE_KEY] : [],
     },
   },
-};
+});

@@ -13,3 +13,5 @@ out/
 # Dotenv file
 .env
 node_modules
+artifacts
+cache_hardhat

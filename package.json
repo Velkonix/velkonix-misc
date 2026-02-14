@@ -2,19 +2,28 @@
   "name": "velkonix-misc",
   "version": "0.1.0",
   "private": true,
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "hh:test": "hardhat test",
     "hh:compile": "hardhat compile",
+    "hh:deploy:arb-sepolia": "hardhat run scripts/deploy-all.js --network arbitrum_sepolia",
+    "hh:mint:arb-sepolia": "hardhat run scripts/mint-test-token.js --network arbitrum_sepolia",
+
+    "hh:aave:add-market:arb-sepolia": "hardhat run scripts/aave-market-admin/add-market.js --network arbitrum_sepolia",
+    "hh:aave:remove-market:arb-sepolia": "hardhat run scripts/aave-market-admin/remove-market.js --network arbitrum_sepolia",
+    "hh:aave:update-market:arb-sepolia": "hardhat run scripts/aave-market-admin/update-market.js --network arbitrum_sepolia",
+    "hh:aave:list-markets:arb-sepolia": "hardhat run scripts/aave-market-admin/list-markets.js --network arbitrum_sepolia",
+
     "hh:e2e": "hardhat run scripts/e2e-onchain.js",
     "forge:test": "forge test"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-foundry": "^1.2.0",
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "@openzeppelin/contracts": "^5.4.0",
-    "dotenv": "^16.4.5",
-    "hardhat": "^2.22.14",
-    "openzeppelin-contracts": "^4.0.0"
+    "@nomicfoundation/hardhat-ethers": "4.0.4",
+    "@nomicfoundation/hardhat-mocha": "3.0.9",
+    "@openzeppelin/contracts": "5.4.0",
+    "chai": "6.2.2",
+    "dotenv": "17.3.1",
+    "hardhat": "3.1.8",
+    "mocha": "11.7.5"
   }
 }

@@ -1,8 +1,10 @@
-require("dotenv").config();
-const fs = require("fs");
-const path = require("path");
-const hre = require("hardhat");
-const { ethers } = hre;
+import "dotenv/config";
+import fs from "node:fs";
+import path from "node:path";
+import { network } from "hardhat";
+
+const connection = await network.connect();
+const { ethers } = connection;
 
 async function main() {
   const deploymentPath = process.env.DEPLOYMENT_PATH || "deployments/arbitrum-sepolia/velkonix-misc-deployment.json";
@@ -54,16 +56,19 @@ async function main() {
   const user2 = ethers.Wallet.createRandom().connect(ethers.provider);
 
   // fork-only: impersonate velk minter (deployer) to mint
-  if (hre.network.name === "hardhat") {
+  if (connection.networkName === "hardhat") {
     const minter = deployment.deployer;
     if (!minter) {
       throw new Error("missing deployer in deployment file for fork minter impersonation");
     }
-    await hre.network.provider.request({
+    await connection.provider.request({
       method: "hardhat_impersonateAccount",
       params: [minter],
     });
-    await hre.network.provider.send("hardhat_setBalance", [minter, "0x3635C9ADC5DEA00000"]); // 1000 ETH
+    await connection.provider.request({
+      method: "hardhat_setBalance",
+      params: [minter, "0x3635C9ADC5DEA00000"],
+    }); // 1000 ETH
     const minterSigner = await ethers.getSigner(minter);
 
     cfg._velkMinterSigner = minterSigner;

@@ -1,7 +1,9 @@
-require("dotenv").config();
-const fs = require("fs");
-const path = require("path");
-const { ethers } = require("hardhat");
+import "dotenv/config";
+import fs from "node:fs";
+import path from "node:path";
+import { network } from "hardhat";
+
+const { ethers } = await network.connect();
 
 async function main() {
   const collector = process.env.COLLECTOR;

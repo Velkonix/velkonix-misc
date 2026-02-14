@@ -1,8 +1,13 @@
-require("dotenv").config();
-const { ethers } = require("hardhat");
+import "dotenv/config";
+import { network } from "hardhat";
+
+const { ethers } = await network.connect();
+import fs from "node:fs";
+import path from "node:path";
 
 async function main() {
   const [deployer] = await ethers.getSigners();
+  const network = await ethers.provider.getNetwork();
 
   const VELK = await ethers.getContractFactory("VELK");
   const xVELK = await ethers.getContractFactory("xVELK");
@@ -59,6 +64,27 @@ async function main() {
   if (feeRouter) {
     console.log("feeRouter:", await feeRouter.getAddress());
   }
+
+  const deploymentPath =
+    process.env.DEPLOYMENT_PATH || "deployments/arbitrum-sepolia/velkonix-misc-deployment.json";
+
+  const deployment = {
+    chainId: Number(network.chainId),
+    network: network.name,
+    timestamp: new Date().toISOString(),
+    deployer: deployer.address,
+    velk: await velk.getAddress(),
+    xvelk: await xvelk.getAddress(),
+    rewardsDistributor: await rewards.getAddress(),
+    staking: await staking.getAddress(),
+    treasury: await treasury.getAddress(),
+    feeRouter: feeRouter ? await feeRouter.getAddress() : null,
+  };
+
+  const absolutePath = path.resolve(deploymentPath);
+  fs.mkdirSync(path.dirname(absolutePath), { recursive: true });
+  fs.writeFileSync(absolutePath, JSON.stringify(deployment, null, 2));
+  console.log("deployment file:", absolutePath);
 }
 
 main().catch((err) => {

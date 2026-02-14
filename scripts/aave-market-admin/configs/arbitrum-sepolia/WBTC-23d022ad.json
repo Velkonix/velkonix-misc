@@ -1,0 +1,30 @@
+{
+  "market": {
+    "asset": "0x23D022Ad0e159490Fdb72b73aF7B5EDE7d6D2eE6",
+    "priceFeed": "0xab6C922Fa0eFd02112C8348a5703eF8309F2BE57",
+    "riskConfig": {
+      "ltv": "8250",
+      "liquidationThreshold": "8600",
+      "liquidationBonus": "10500",
+      "reserveFactor": "1000",
+      "borrowCap": "0",
+      "supplyCap": "0",
+      "liquidationProtocolFee": "1000",
+      "debtCeiling": "0",
+      "borrowingEnabled": true,
+      "flashloanEnabled": true,
+      "active": true,
+      "frozen": false
+    }
+  },
+  "metadata": {
+    "exportedAt": "2026-02-13T17:09:28.143Z",
+    "symbol": "WBTC",
+    "name": "WBTC",
+    "decimals": "8",
+    "asset": "0x23D022Ad0e159490Fdb72b73aF7B5EDE7d6D2eE6",
+    "network": "arbitrum_sepolia",
+    "source": "scripts/aave-market-admin/list-markets.js",
+    "note": "This export contains sync-oriented market params. For add-market listing, initReserveInput must be added manually."
+  }
+}

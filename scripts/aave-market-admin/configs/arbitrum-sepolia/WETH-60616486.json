@@ -1,0 +1,30 @@
+{
+  "market": {
+    "asset": "0x60616486c576EEe50d0Dbb2cf48a327ad00F82F4",
+    "priceFeed": "0x522D2cd493CB804573683677FD29F4f7b4b5bE25",
+    "riskConfig": {
+      "ltv": "8250",
+      "liquidationThreshold": "8600",
+      "liquidationBonus": "10500",
+      "reserveFactor": "1000",
+      "borrowCap": "0",
+      "supplyCap": "0",
+      "liquidationProtocolFee": "1000",
+      "debtCeiling": "0",
+      "borrowingEnabled": true,
+      "flashloanEnabled": true,
+      "active": true,
+      "frozen": false
+    }
+  },
+  "metadata": {
+    "exportedAt": "2026-02-13T17:09:28.143Z",
+    "symbol": "WETH",
+    "name": "Wrapped Ether",
+    "decimals": "18",
+    "asset": "0x60616486c576EEe50d0Dbb2cf48a327ad00F82F4",
+    "network": "arbitrum_sepolia",
+    "source": "scripts/aave-market-admin/list-markets.js",
+    "note": "This export contains sync-oriented market params. For add-market listing, initReserveInput must be added manually."
+  }
+}
